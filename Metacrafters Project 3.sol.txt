@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract funcErrors{
+    address public owner;
+    uint256 public value;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    //check ownwership and rever if necessary
+    function testRequire(uint _value) public {
+        require(msg.sender == owner, "Only the owner can perform this action");
+        value = _value;
+    }
+
+    //revert transactions if an input is not met
+    function testRevert(uint _values) external pure returns (bool)  {
+        if (_values > 10) {
+            revert("Input must be less than 10");
+        }
+        return true;
+     }
+
+    //assert to check a condition and revert if fails
+     function testAssert(uint num) external pure returns (uint) {
+        assert(num != 0);
+        return num;
+    }
+}
